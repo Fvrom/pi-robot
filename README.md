@@ -1,2 +1,2 @@
 # pi-robot
-Bulding a car robot with raspberry pi and Node.js
+Building a robot car with raspberry pi and node.js
