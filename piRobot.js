@@ -1,4 +1,5 @@
  //const Gpio = require('pigpio').Gpio; 
+
  
 //const gpioDef = require('./gpioDef.js');
 
@@ -10,46 +11,44 @@
 positive 22 negative 23
 pin: 15 & 16 */ 
 
-const Gpio = require("onoff").Gpio;
-
-const motorLeftBack = new Gpio(18, 'out'); 
-const motorLeftFront = new Gpio(17, 'out'); 
-
-const motorRightBack = new Gpio(22, 'out'); 
-const motorRightFront = new Gpio(23, 'out');
-
-function moveRobotForward(arg){
- 
-    motorLeftFront.writeSync(1) // is reversed
-    motorRightFront.writeSync(1) // is reversed 
-    }
-   moveRobotForward();
-   // motorLeftFront.writeSync(0);
-   //motorRightFront.writeSync(0);
-   
-    function endMotor() {
-        motorLeftFront.writeSync(0); 
-        motorRightFront.writeSync(0);
-        motorLeftFront.unexport(); 
-        motorRightFront.unexport();
-    }
-    setTimeout(endMotor, 4000);
-
-/* 
-const lwheelf = new Gpio(GPIO17, {mode: Gpio.OUTPUT});
-const lwheelback = new Gpio(GPIO18,{mode: Gpio.OUTPUT});
-
-const rwheelf = new Gpio(22, {mode: Gpio.OUTPUT});
-const rwheelback = new Gpio(23,{mode: Gpio.OUTPUT});
+//const Gpio = require('onoff').Gpio;
+import {Gpio} from 'onoff'; 
 
 
-
-function myFunc(arg){
- 
-lwheelf.pwmWrite(150);
-lwheelback.pwmWrite(150);
+const motorLeftReverse = new Gpio(17, "out");
+const motorLeftForward = new Gpio(18, "out");
 
 
+const motorRightReverse = new Gpio(23, "out");
+const motorRightForward = new Gpio(22, "out"); 
+
+class PiRobot {
+  constructor(name) {
+   this.name = name; 
+  
+  }
+     
+
+ forward() {
+  motorLeftForward.writeSync(1);
+  motorRightForward.writeSync(1);
+ }
+ reverse() {
+  motorLeftReverse.writeSync(1);
+  motorRightReverse.writeSync(1);
+ }
+ stop() {
+      motorLeftForward.writeSync(0);
+      motorRightForward.writeSync(0);
+      motorLeftReverse.writeSync(0);
+      motorRightReverse.writeSync(0);
+      motorLeftForward.unexport();
+      motorRightForward.unexport();
+      motorLeftReverse.unexport();
+      motorRightReverse.unexport();
+ }
 }
-setTimeout(myFunc, 3000, 'funk');
-console.log(lwheelf);  */ 
+
+
+export default PiRobot; 
+
